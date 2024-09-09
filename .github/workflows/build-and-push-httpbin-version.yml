@@ -1,5 +1,5 @@
 # .github/workflows/build-and-push-httpbin-docker.yml
-name: Build and Push httpbin Docker Image to ECR
+name: Build Push new version to ECR
 
 on:
   workflow_dispatch:
