@@ -23,6 +23,11 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ secrets.AWS_REGION }}
 
+    - name: Set up Helm
+      uses: azure/setup-helm@v1
+      with:
+        version: '3.8.0'
+        
     - name: Set up kubectl
       uses: azure/setup-kubectl@v1
 
@@ -30,6 +35,9 @@ jobs:
       run: |
         aws eks --region eu-west-1 update-kubeconfig --name itamar-cluster
 
+    - name: Add Helm repository
+      run: helm repo add matheusfm https://matheusfm.dev/charts 
+      
     - name: Upgrade Helm chart
       run: |
         helm upgrade httpbin-custom --set service.type=NodePort --set image.repository=872515294445.dkr.ecr.eu-west-1.amazonaws.com/itamar --set image.tag=${{ github.event.inputs.image-tag }} -n httpbin-custom matheusfm/httpbin
