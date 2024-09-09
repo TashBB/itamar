@@ -1,0 +1,28 @@
+name: Deploy to EKS
+
+on:
+  workflow_dispatch:
+    inputs:
+      image-tag:
+        description: 'Image to deploy'
+        required: true
+        default: 'latest'
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up kubectl
+      uses: azure/setup-kubectl@v1
+
+    - name: Configure kubectl
+      run: |
+        aws eks --region eu-west-1 update-kubeconfig --name itamar-cluster
+
+    - name: Upgrade Helm chart
+      run: |
+        helm upgrade httpbin-custom --set service.type=NodePort --set image.repository=872515294445.dkr.ecr.eu-west-1.amazonaws.com/itamar --set image.tag=${{ github.event.inputs.image-tag }} -n httpbin-custom matheusfm/httpbin
