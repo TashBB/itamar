@@ -40,4 +40,4 @@ jobs:
       
     - name: Upgrade Helm chart
       run: |
-        helm upgrade httpbin-custom --set service.type=NodePort --set image.repository=872515294445.dkr.ecr.eu-west-1.amazonaws.com/itamar --set image.tag=${{ github.event.inputs.image-tag }} -n httpbin-custom matheusfm/httpbin
+        helm upgrade httpbin --set service.type=NodePort --set image.repository=872515294445.dkr.ecr.eu-west-1.amazonaws.com/itamar --set image.tag=${{ github.event.inputs.image-tag }} -n httpbin-custom matheusfm/httpbin
