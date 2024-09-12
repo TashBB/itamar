@@ -33,7 +33,7 @@ jobs:
 
     - name: Configure kubectl
       run: |
-        aws eks --region ${{ secrets.AWS_EKS_REGION }} update-kubeconfig --name eks
+        aws eks --region ${{ secrets.AWS_EKS_REGION }} update-kubeconfig --name itamar-cluster
 
     - name: Add Helm repository
       run: helm repo add matheusfm https://matheusfm.dev/charts 
